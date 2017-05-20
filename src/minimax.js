@@ -1,7 +1,5 @@
 
 /*
- *
- *
 The function "makeMove" is already written for you.
 You do not need to modify it, but you should read it.
 
@@ -15,7 +13,6 @@ Input: A state object, representing the Connect 4 board.
 
 Output: Returns an integer indicating the column
 where the piece will be dropped.
-
 */
 
 const makeMove = (state) => {
@@ -38,7 +35,6 @@ const makeMove = (state) => {
 	// does NOT change the original state, but
 	// returns a new one.
 	const newState = state.move(allLegalMoves[0]);
-
 
 	// The following is the guts of the make-move function.
 	// It evaluates each possible successor state with
@@ -69,69 +65,47 @@ const makeMove = (state) => {
 
 }
 
-
-
-/*
-You must write the function "heuristic".
-
-Input: state, maximizingPlayer.  The state will be
-a state object.  The maximizingPlayer will be either
-an 'x' or an 'o', and is the player whose advantage
-is signified by positive numbers.
-
-Output: A number evaluating how good the state is from
-the perspective of the player who is maximizing.
-
-A useful method on state here would be state.numLines.
-This function takes an integer and a player
-like this "state.numLines(2,'x')" and returns the
-number of lines of that length which that player
-has.  That is, it returns the number of contiguous linear
-pieces of that length that that player has.
-
-You'll want to pass the tests defined in minimax_specs.js.
-*/
 const heuristic = (state, maximizingPlayer) => {
 
-	//This is how you can retrieve the minimizing player.
-    const minimizingPlayer = (maximizingPlayer == 'x') ? 'o' : 'x';
+  const minimizingPlayer = maximizingPlayer === 'x' ? 'o' : 'x';
 
-	//An example.
-    const linesOfLengthTwoForX = state.numLines(2, 'x')
+	const playerScore = (player) =>
+		[2, 3, 4].reduce((acc, val) => {
+			return acc + (state.numLines(val, player) * val)
+		}, 0)
 
-    //Your code here.  Don't return random, obviously.
-	return Math.random()
+	return playerScore(maximizingPlayer) - playerScore(minimizingPlayer)
 }
 
-
-
 /*
-You must write the function "minimax".
 
 Input: state, depth, maximizingPlayer.  The state is
-an instance of a state object.  The depth is an integer
-greater than zero; when it is zero, the minimax function
-should return the value of the heuristic function.
+an instance of a state object.  The depth is an integer greater than zero; when it is zero, the minimax function should return the value of the heuristic function.
 
 Output: Returns a number evaluating the state, just
 like heuristic does.
 
 You'll need to use state.nextStates(), which returns
-a list of possible successor states to the state passed in
-as an argument.
+a list of possible successor states to the state passed in as an argument.
 
 You'll also probably need to use state.nextMovePlayer,
-which returns whether the next moving player is 'x' or 'o',
-to see if you are maximizing or minimizing.
+which returns whether the next moving player is 'x' or 'o', to see if you are maximizing or minimizing.
 */
 const minimax = (state, depth, maximizingPlayer) => {
-	var minimizingPlayer = (maximizingPlayer == 'x') ? 'o' : 'x';
-	var possibleStates = state.nextStates();
-	var currentPlayer = state.nextMovePlayer;
-	//Your code here.
-	return Math.random();
-}
+	let minimizingPlayer = (maximizingPlayer === 'x') ? 'o' : 'x',
+	bestScore = 0,
+	possibleStates = state.nextStates(),
+	currentPlayer = state.nextMovePlayer;
 
+	if (depth === 0 || !possibleStates.length) bestScore += heuristic(state, maximizingPlayer);
+	else if (currentPlayer === maximizingPlayer) {
+
+	}
+	else {
+
+	}
+	return bestScore;
+}
 
 
 /* minimaxAlphaBetaWrapper is a pre-written function, but it will not work
