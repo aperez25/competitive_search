@@ -166,7 +166,7 @@ describe('Testing some basic functions in the minimax evaluation function', func
 				s = s.move(Math.floor(Math.random()*7));
 			}
 			let val = minimax(s, Math.floor(Math.random()*2), 'x');
-			expect(typeof val == 'number').to.equal(true);;
+			expect(typeof val == 'number').to.equal(true);
 		}
 
 	});
